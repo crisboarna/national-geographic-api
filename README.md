@@ -52,6 +52,7 @@ natgeo.getLatestNews(`PAGE_SIZE` , `PAGE_NUMBER` , `CALLBACK` )
 - `CALLBACK` - optional, if no callback provided returns a promise
 
 ### Photo of the Day
+
 Returns requested Photo of the Day from National Geographic [archives](https://www.nationalgeographic.com/photography/photo-of-the-day/).
 ```javascript
 natgeo.getPhotoOfDay(`DAY` , `CALLBACK`)
