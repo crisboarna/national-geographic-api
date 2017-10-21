@@ -22,6 +22,8 @@ npm install national-geographic-api
 ## Table of Contents
 * [Setup](#setup)
 * [Features](#features)
+  * [Latest News](#latest-news)
+  * [Photo of the Day](#photo-of-the-day)
 
 ## Setup
 
@@ -39,6 +41,7 @@ const natgeo = require('national-geographic-api').API;
 
 ### Latest News
 
+Returns the latest news from National Geographic [News API](https://www.nationalgeographic.com/latest-stories/) with metadata.
 ```javascript
 natgeo.getLatestNews(`PAGE_SIZE` , `PAGE_NUMBER` , `CALLBACK` )
     .then((result) => ...);
@@ -46,4 +49,14 @@ natgeo.getLatestNews(`PAGE_SIZE` , `PAGE_NUMBER` , `CALLBACK` )
 
 - `PAGE_SIZE` - optional, defaults to 3 story items
 - `PAGE_NUMBER` - optional, defaults to page 0
+- `CALLBACK` - optional, if no callback provided returns a promise
+
+### Photo of the Day
+Returns requested Photo of the Day from National Geographic [archives](https://www.nationalgeographic.com/photography/photo-of-the-day/).
+```javascript
+natgeo.getPhotoOfDay(`DAY` , `CALLBACK`)
+    .then((result) => ...);
+```
+
+- `DAY` - optional, defaults to today. Expects ISO date format
 - `CALLBACK` - optional, if no callback provided returns a promise
