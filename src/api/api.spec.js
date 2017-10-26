@@ -123,7 +123,7 @@ describe('NationalGeographic API', () => {
 
   describe('getPhotoOfDay', () => {
     const POD_API_URL = 'https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44';
-    const TEST_DAY = '2017-10-21';
+    const TEST_DAY = '2017-09-30';
     const now = new Date().toISOString();
     const TEST_DAY_DEFAULT = now.substring(0, now.indexOf('T'));
     const correctDefaultPayload = {
@@ -132,7 +132,7 @@ describe('NationalGeographic API', () => {
         'apiauth-apiuser': 'pod_archive'
       },
       method: 'GET',
-      url: `https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44&publication_datetime_from=${TEST_DAY_DEFAULT}T00:00:00Z&page=1&limit=1`
+      url: `https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44&publication_datetime__from=${TEST_DAY_DEFAULT}T00:00:00Z&page=1&limit=1`
     };
 
     it('returns a promise and expected payload given no cb', () => {
@@ -156,7 +156,7 @@ describe('NationalGeographic API', () => {
 
       const targetDate = new Date(TEST_DAY);
       const numberOfDays = Math.round(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
-      const url = `${POD_API_URL}&publication_datetime_from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
+      const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
       const correctInputPayload = {
         headers: {
           'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',
@@ -190,7 +190,7 @@ describe('NationalGeographic API', () => {
     it('given cb and valid parameter no promise returned and expected request payload created', () => {
       const targetDate = new Date(TEST_DAY);
       const numberOfDays = Math.round(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
-      const url = `${POD_API_URL}&publication_datetime_from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
+      const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
       const correctInputPayload = {
         headers: {
           'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',

@@ -53,11 +53,11 @@ export class API {
     if (Object.prototype.toString.call(day) !== '[object String]' || isNaN(Date.parse(day))) {
       const now = new Date().toISOString();
       const date = now.substring(0, now.indexOf('T'));
-      url = `${POD_API_URL}&publication_datetime_from=${date}T00:00:00Z&page=1&limit=1`;
+      url = `${POD_API_URL}&publication_datetime__from=${date}T00:00:00Z&page=1&limit=1`;
     } else {
       const targetDate = new Date(day);
       const numberOfDays = Math.round(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
-      url = `${POD_API_URL}&publication_datetime_from=${day}T00:00:00Z&page=${numberOfDays}&limit=1`;
+      url = `${POD_API_URL}&publication_datetime__from=${day}T00:00:00Z&page=${numberOfDays}&limit=1`;
     }
 
     const requestOptions = {
