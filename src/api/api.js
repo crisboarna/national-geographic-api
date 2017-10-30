@@ -56,7 +56,7 @@ export class API {
       url = `${POD_API_URL}&publication_datetime__from=${date}T00:00:00Z&page=1&limit=1`;
     } else {
       const targetDate = new Date(day);
-      const numberOfDays = Math.round(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
+      const numberOfDays = Math.floor(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
       url = `${POD_API_URL}&publication_datetime__from=${day}T00:00:00Z&page=${numberOfDays}&limit=1`;
     }
 

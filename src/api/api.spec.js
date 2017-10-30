@@ -123,7 +123,7 @@ describe('NationalGeographic API', () => {
 
   describe('getPhotoOfDay', () => {
     const POD_API_URL = 'https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44';
-    const TEST_DAY = '2017-09-30';
+    const TEST_DAY = '2016-12-14';
     const now = new Date().toISOString();
     const TEST_DAY_DEFAULT = now.substring(0, now.indexOf('T'));
     const correctDefaultPayload = {
@@ -155,7 +155,7 @@ describe('NationalGeographic API', () => {
       const POD_API_URL = 'https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44';
 
       const targetDate = new Date(TEST_DAY);
-      const numberOfDays = Math.round(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
+      const numberOfDays = Math.floor(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
       const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
       const correctInputPayload = {
         headers: {
@@ -189,7 +189,7 @@ describe('NationalGeographic API', () => {
 
     it('given cb and valid parameter no promise returned and expected request payload created', () => {
       const targetDate = new Date(TEST_DAY);
-      const numberOfDays = Math.round(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
+      const numberOfDays = Math.floor(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
       const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
       const correctInputPayload = {
         headers: {
