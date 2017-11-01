@@ -16,8 +16,8 @@
     "prepush": "npm test",
     "check-coverage": "nyc check-coverage --statements 98 --branches 98 --functions 98 --lines 98",
     "report-coverage": "cat ./coverage/lcov.info | codecov",
-    "test": "standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") --require babel-register",
-    "test-watch": "standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w --require babel-register",
+    "test": "NODE_ENV=test standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") --require babel-register",
+    "test-watch": "NODE_ENV=test standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w --require babel-register",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
@@ -39,7 +39,24 @@
     "presets": [
       "es2015",
       "stage-2"
-    ]
+    ],
+    "plugins": [
+      "transform-async-to-generator"
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          "istanbul"
+        ]
+      }
+    }
+  },
+  "nyc": {
+    "require": [
+      "babel-register"
+    ],
+    "sourceMap": false,
+    "instrument": false
   },
   "keywords": [
     "National",
@@ -57,6 +74,10 @@
   "homepage": "https://github.com/crisboarna/national-geographic-api#readme",
   "devDependencies": {
     "babel-cli": "6.26.0",
+    "babel-core": "6.26.0",
+    "babel-plugin-istanbul": "4.1.5",
+    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-polyfill": "6.26.0",
     "babel-preset-es2015": "6.24.1",
     "babel-preset-stage-2": "6.24.1",
     "babel-register": "6.26.0",

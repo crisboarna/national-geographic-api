@@ -39,7 +39,7 @@ describe('makeRequest', () => {
       sinon.assert.calledWith(callbackSpy, TEST_ERROR);
     });
 
-    it('calls cb with body error given no error and body with error', () => {
+    it('calls cb with body error given no error and body', () => {
       const request = (req, cb) => cb(null, TEST_REQUEST, TEST_BODY);
       const utils = proxyquire('./utils', {'request': request});
 

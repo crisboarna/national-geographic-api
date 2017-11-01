@@ -135,75 +135,165 @@ describe('NationalGeographic API', () => {
       url: `https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44&publication_datetime__from=${TEST_DAY_DEFAULT}T00:00:00Z&page=1&limit=1`
     };
 
-    it('returns a promise and expected payload given no cb', () => {
-      const result = NatGeo.getPhotoOfDay();
+    describe('promises', () => {
+      it('returns a promise and expected payload given no cb', () => {
+        const result = NatGeo.getPhotoOfDay();
 
-      expect(typeof result.then).to.be.equal('function');
-      expect(typeof result.catch).to.be.equal('function');
-      sinon.assert.calledWith(requestSpy, correctDefaultPayload);
+        expect(typeof result.then).to.be.equal('function');
+        expect(typeof result.catch).to.be.equal('function');
+        sinon.assert.calledWith(requestSpy, correctDefaultPayload);
+      });
+
+      it('returns a promise given no cb and wrong input and expected request payload created', () => {
+        const result = NatGeo.getPhotoOfDay(TEST_TEXT);
+
+        expect(typeof result.then).to.be.equal('function');
+        expect(typeof result.catch).to.be.equal('function');
+        sinon.assert.calledWith(requestSpy, correctDefaultPayload);
+      });
+
+      it('returns a promise given no cb and correct input and expected request payload created', (done) => {
+        const POD_API_URL = 'https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44';
+
+        const targetDate = new Date(TEST_DAY);
+        const numberOfDays = Math.floor(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
+        const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
+        const correctInputPayload = {
+          headers: {
+            'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',
+            'apiauth-apiuser': 'pod_archive'
+          },
+          method: 'GET',
+          url: url
+        };
+
+        const makeRequestStub = sinon.stub().resolves(JSON.stringify({data: [{value: TEST_TEXT}]}));
+        const makeRequestContainer = {};
+        makeRequestContainer.makeRequest = makeRequestStub;
+        const NatGeo = proxyquire('./api', {'../util/utils': makeRequestContainer}).API;
+
+        const result = NatGeo.getPhotoOfDay(TEST_DAY);
+
+        expect(typeof result.then).to.be.equal('function');
+        expect(typeof result.catch).to.be.equal('function');
+        result.then((res) => {
+          sinon.assert.calledWith(makeRequestStub, correctInputPayload);
+          done();
+        });
+      });
+
+      it('returns a promise given no cb and no today photo expect request payload for yesterday created', (done) => {
+        const POD_API_URL = 'https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44';
+
+        const yesterdayDate = new Date();
+        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+        const yesterdayString = yesterdayDate.toISOString();
+        const day = yesterdayString.substring(0, yesterdayString.indexOf('T'));
+        const url = `${POD_API_URL}&publication_datetime__from=${day}T00:00:00Z&page=1&limit=1`;
+        const correctInputPayload = {
+          headers: {
+            'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',
+            'apiauth-apiuser': 'pod_archive'
+          },
+          method: 'GET',
+          url: url
+        };
+
+        const makeRequestStub = sinon.stub().resolves(JSON.stringify({data: []}));
+        const makeRequestContainer = {};
+        makeRequestContainer.makeRequest = makeRequestStub;
+        const NatGeo = proxyquire('./api', {'../util/utils': makeRequestContainer}).API;
+
+        const result = NatGeo.getPhotoOfDay();
+
+        expect(typeof result.then).to.be.equal('function');
+        expect(typeof result.catch).to.be.equal('function');
+        result.then((res) => {
+          sinon.assert.calledWith(makeRequestStub, correctInputPayload);
+          done();
+        });
+      });
     });
 
-    it('returns a promise given no cb and wrong input and expected request payload created', () => {
-      const result = NatGeo.getPhotoOfDay(TEST_TEXT);
+    describe('callbacks', () => {
+      it('given cb no promise/parameters returned and expected request payload created', () => {
+        const result = NatGeo.getPhotoOfDay(TEST_CALLBACK);
 
-      expect(typeof result.then).to.be.equal('function');
-      expect(typeof result.catch).to.be.equal('function');
-      sinon.assert.calledWith(requestSpy, correctDefaultPayload);
-    });
+        expect(JSON.stringify(result)).to.equal(JSON.stringify({}));
+        sinon.assert.calledWith(requestSpy, correctDefaultPayload);
+      });
 
-    it('returns a promise given no cb and correct input and expected request payload created', () => {
-      const POD_API_URL = 'https://relay.nationalgeographic.com/proxy/distribution/feed/v1?format=jsonapi&content_type=featured_image&fields=image,uri&collection=fd5444cc-4777-4438-b9d4-5085c0564b44';
+      it('given cb and invalid parameter no promise returned and expected request payload created', () => {
+        const result = NatGeo.getPhotoOfDay(TEST_TEXT, TEST_CALLBACK);
 
-      const targetDate = new Date(TEST_DAY);
-      const numberOfDays = Math.floor(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
-      const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
-      const correctInputPayload = {
-        headers: {
-          'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',
-          'apiauth-apiuser': 'pod_archive'
-        },
-        method: 'GET',
-        url: url
-      };
+        expect(JSON.stringify(result)).to.equal(JSON.stringify({}));
+        sinon.assert.calledWith(requestSpy, correctDefaultPayload);
+      });
 
-      const result = NatGeo.getPhotoOfDay(TEST_DAY);
+      it('given cb and valid parameter no promise returned and expected request payload created', () => {
+        const targetDate = new Date(TEST_DAY);
+        const numberOfDays = Math.floor(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
+        const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
+        const correctInputPayload = {
+          headers: {
+            'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',
+            'apiauth-apiuser': 'pod_archive'
+          },
+          method: 'GET',
+          url: url
+        };
 
-      expect(typeof result.then).to.be.equal('function');
-      expect(typeof result.catch).to.be.equal('function');
-      sinon.assert.calledWith(requestSpy, correctInputPayload);
-    });
+        const result = NatGeo.getPhotoOfDay(TEST_DAY, TEST_CALLBACK);
 
-    it('given cb no promise/parameters returned and expected request payload created', () => {
-      const result = NatGeo.getPhotoOfDay(TEST_CALLBACK);
+        expect(JSON.stringify(result)).to.equal(JSON.stringify({}));
+        sinon.assert.calledWith(requestSpy, correctInputPayload);
+      });
 
-      expect(result).to.equal(undefined);
-      sinon.assert.calledWith(requestSpy, correctDefaultPayload);
-    });
+      it('given cb and valid parameter no promise returned and expected request payload created for today', (done) => {
+        const returnedValue = JSON.stringify({data: [TEST_TEXT]});
+        const makeRequestStub = sinon.stub().resolves(returnedValue);
+        const makeRequestContainer = {};
+        makeRequestContainer.makeRequest = makeRequestStub;
+        const NatGeo = proxyquire('./api', {'../util/utils': makeRequestContainer}).API;
 
-    it('given cb and invalid parameter no promise returned and expected request payload created', () => {
-      const result = NatGeo.getPhotoOfDay(TEST_TEXT, TEST_CALLBACK);
+        const result = NatGeo.getPhotoOfDay((res) => {
+          expect(res).to.deep.equal(returnedValue);
+          sinon.assert.calledWith(makeRequestStub, correctDefaultPayload);
+          done();
+        });
+        expect(JSON.stringify(result)).to.equal(JSON.stringify({}));
+      });
 
-      expect(result).to.equal(undefined);
-      sinon.assert.calledWith(requestSpy, correctDefaultPayload);
-    });
+      it('given cb and valid parameter no promise returned and expected request payload created for yesterday', (done) => {
+        const yesterdayDate = new Date();
+        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+        const yesterdayString = yesterdayDate.toISOString();
+        const day = yesterdayString.substring(0, yesterdayString.indexOf('T'));
+        const url = `${POD_API_URL}&publication_datetime__from=${day}T00:00:00Z&page=1&limit=1`;
+        const correctInputPayload = {
+          headers: {
+            'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',
+            'apiauth-apiuser': 'pod_archive'
+          },
+          method: 'GET',
+          url: url
+        };
 
-    it('given cb and valid parameter no promise returned and expected request payload created', () => {
-      const targetDate = new Date(TEST_DAY);
-      const numberOfDays = Math.floor(Math.abs((Date.now() - targetDate.getTime()) / (timeInOneDay)));
-      const url = `${POD_API_URL}&publication_datetime__from=${TEST_DAY}T00:00:00Z&page=${numberOfDays}&limit=1`;
-      const correctInputPayload = {
-        headers: {
-          'apiauth-apikey': '9fa5d22ad7b354fe0f9be5597bcf153df56e2ca5',
-          'apiauth-apiuser': 'pod_archive'
-        },
-        method: 'GET',
-        url: url
-      };
+        const returnedValue = JSON.stringify({data: []});
+        const makeRequestStub = sinon.stub();
+        makeRequestStub.onCall(0).resolves(returnedValue);
+        makeRequestStub.onCall(1).returnsArg(0);
+        const makeRequestContainer = {};
+        makeRequestContainer.makeRequest = makeRequestStub;
+        const NatGeo = proxyquire('./api', {'../util/utils': makeRequestContainer}).API;
 
-      const result = NatGeo.getPhotoOfDay(TEST_DAY, TEST_CALLBACK);
-
-      expect(result).to.equal(undefined);
-      sinon.assert.calledWith(requestSpy, correctInputPayload);
+        const result = NatGeo.getPhotoOfDay(TEST_CALLBACK);
+        result.then((res) => {
+          expect(res).to.deep.equal(correctInputPayload);
+          done();
+        });
+        expect(JSON.stringify(result)).to.equal(JSON.stringify({}));
+      });
     });
   });
 });
