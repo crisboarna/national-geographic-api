@@ -37,11 +37,7 @@
   },
   "babel": {
     "presets": [
-      "es2015",
-      "stage-2"
-    ],
-    "plugins": [
-      "transform-async-to-generator"
+      "env"
     ],
     "env": {
       "test": {
@@ -74,12 +70,8 @@
   "homepage": "https://github.com/crisboarna/national-geographic-api#readme",
   "devDependencies": {
     "babel-cli": "6.26.0",
-    "babel-core": "6.26.0",
     "babel-plugin-istanbul": "4.1.5",
-    "babel-plugin-transform-async-to-generator": "6.24.1",
-    "babel-polyfill": "6.26.0",
-    "babel-preset-es2015": "6.24.1",
-    "babel-preset-stage-2": "6.24.1",
+    "babel-preset-env": "1.6.1",
     "babel-register": "6.26.0",
     "chai": "4.1.2",
     "codecov.io": "0.1.6",
