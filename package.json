@@ -15,7 +15,7 @@
     "commit": "git-cz",
     "prepush": "npm test",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
-    "report-coverage": "cat ./coverage/lcov.info | codecov",
+    "report-coverage": "./node_modules/.bin/codecov",
     "test": "NODE_ENV=test standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") --require babel-register",
     "test-watch": "NODE_ENV=test standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w --require babel-register",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
@@ -61,7 +61,7 @@
     "babel-preset-stage-2": "6.24.1",
     "babel-register": "6.26.0",
     "chai": "4.1.2",
-    "codecov.io": "0.1.6",
+    "codecov": "3.0.0",
     "commitizen": "2.9.6",
     "cz-conventional-changelog": "2.1.0",
     "greenkeeper-lockfile": "1.13.2",
