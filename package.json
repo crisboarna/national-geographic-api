@@ -16,7 +16,7 @@
     "prepush": "npm test",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "report-coverage": "./node_modules/.bin/codecov",
-    "test": "NODE_ENV=test standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") --require babel-register",
+    "test": "standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") --require babel-register",
     "test-watch": "NODE_ENV=test standard --verbose && nyc --reporter=html --reporter=text --reporter=lcov -x **/**.spec.js mocha $(find src -name \"*.spec.js\") -w --require babel-register",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
