@@ -1,8 +1,5 @@
 .idea/
 *.iml
 node_modules/
-dist/
-*.tgz
 coverage/
-.nyc_output/
-package/
+dist/
