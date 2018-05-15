@@ -41,7 +41,7 @@
     "typescript": "2.8.3"
   },
   "dependencies": {
-    "request": "2.85.0",
+    "request": "2.86.0",
     "@types/request": "2.47.0"
   },
   "repository": {
