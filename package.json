@@ -24,9 +24,9 @@
     "travis-deploy-once": "travis-deploy-once"
   },
   "devDependencies": {
-    "@types/jest": "22.2.3",
+    "@types/jest": "23.0.0",
     "codecov": "3.0.1",
-    "commitizen": "2.9.6",
+    "commitizen": "2.10.1",
     "cz-conventional-changelog": "2.1.0",
     "greenkeeper-lockfile": "1.15.1",
     "husky": "0.15.0-rc.2",
@@ -41,8 +41,8 @@
     "typescript": "2.8.3"
   },
   "dependencies": {
-    "request": "2.86.0",
-    "@types/request": "2.47.0"
+    "request": "2.87.0",
+    "@types/request": "2.47.1"
   },
   "repository": {
     "type": "git",
