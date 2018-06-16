@@ -24,7 +24,7 @@
     "travis-deploy-once": "travis-deploy-once"
   },
   "devDependencies": {
-    "@types/jest": "23.0.0",
+    "@types/jest": "23.1.0",
     "codecov": "3.0.1",
     "commitizen": "2.10.1",
     "cz-conventional-changelog": "2.1.0",
