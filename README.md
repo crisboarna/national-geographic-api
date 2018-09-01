@@ -24,6 +24,7 @@
 
 ## Documentation
 You can find documentation [here](https://crisboarna.github.io/national-geographic-api/)
+
 ## Installation
 ```
 npm i national-geographic-api
