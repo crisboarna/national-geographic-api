@@ -5,7 +5,7 @@
 [![travis build](https://img.shields.io/travis/crisboarna/national-geographic-api.svg)](https://travis-ci.org/crisboarna/national-geographic-api)
 [![codecov coverage](https://img.shields.io/codecov/c/github/crisboarna/national-geographic-api.svg)](https://codecov.io/gh/crisboarna/national-geographic-api)
 [![dependency status](https://img.shields.io/david/crisboarna/national-geographic-api.svg)](https://david-dm.org/crisboarna/national-geographic-api)
-[![Known Vulnerabilities](https://snyk.io/package/npm/national-geographic-api/badge.svg)](https://snyk.io/package/npm/national-geographic-api)
+[![Known Vulnerabilities](https://app.snyk.io/test/github/crisboarna/national-geographic-api/badge.svg?targetFile=package.json)](https://snyk.io/test/github/crisboarna/national-geographic-api?targetFile=package.json)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8d87ae38dea34aa09d0daa0ab81b81cd)](https://www.codacy.com/app/crisboarna/national-geographic-api?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=crisboarna/national-geographic-api&amp;utm_campaign=Badge_Grade)
 [![MIT License](https://img.shields.io/npm/l/national-geographic-api.svg)](http://opensource.org/licenses/MIT)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg?style=flat-square)](https://github.com/semantic-release/semantic-release)
