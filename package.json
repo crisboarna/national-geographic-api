@@ -16,7 +16,7 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "tslint": "./node_modules/.bin/tslint -c tslint.json -p tsconfig.json --fix",
-    "generate-docs": "./node_modules/.bin/typedoc --out ./docs --module modules --hideGenerator --tsconfig tsconfig.json",
+    "generate-docs": "./node_modules/.bin/typedoc --out ./docs --module commonjs --hideGenerator --tsconfig tsconfig.json",
     "precommit": "npm t && npm run tslint && npm run build && git add .",
     "commit": "git-cz",
     "report-coverage": "cat ./coverage/lcov.info | ./node_modules/.bin/codecov",
