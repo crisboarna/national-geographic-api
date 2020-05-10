@@ -13,7 +13,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --coverage --watchAll",
     "prebuild": "rimraf ./dist",
-    "build": "tsc --declaration",
+    "build": "tsc",
     "build:watch": "tsc -w",
     "tslint": "./node_modules/.bin/tslint -c tslint.json -p tsconfig.json --fix",
     "generate-docs": "./node_modules/.bin/typedoc --out ./docs --module modules --hideGenerator --tsconfig tsconfig.json",
@@ -24,25 +24,25 @@
     "travis-deploy-once": "travis-deploy-once"
   },
   "devDependencies": {
-    "@types/jest": "23.3.3",
-    "@types/request": "2.48.0",
-    "codecov": "3.1.0",
-    "commitizen": "3.0.0",
-    "cz-conventional-changelog": "2.1.0",
+    "@types/jest": "23.3.9",
+    "@types/request": "2.48.1",
+    "codecov": "3.2.0",
+    "commitizen": "3.0.5",
+    "cz-conventional-changelog": "3.0.0",
     "greenkeeper-lockfile": "1.15.1",
-    "husky": "1.0.0",
+    "husky": "1.1.3",
     "jest": "23.6.0",
-    "rimraf": "2.6.2",
-    "semantic-release": "^15.3.0",
-    "travis-deploy-once": "5.0.9",
-    "ts-jest": "23.10.2",
+    "rimraf": "2.6.3",
+    "semantic-release": "^16.0.0",
+    "travis-deploy-once": "5.0.10",
+    "ts-jest": "23.10.5",
     "tslint": "5.10.0",
-    "tslint-config-airbnb": "5.10.0",
-    "typedoc": "0.13.0",
+    "tslint-config-airbnb": "5.11.1",
+    "typedoc": "0.14.0",
     "typescript": "2.8.3"
   },
   "dependencies": {
-    "request": "2.88.0"
+    "request": "2.88.2"
   },
   "repository": {
     "type": "git",
